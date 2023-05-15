@@ -1,0 +1,8 @@
+-- -- // disable passenger \\ -- 
+-- lib.onCache('seat', function(value)
+--     if value == -1 then
+--         SetPlayerCanDoDriveBy(cache.playerId, false)
+--     else
+--         SetPlayerCanDoDriveBy(cache.playerId, true)
+--     end
+-- end)

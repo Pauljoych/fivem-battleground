@@ -1,0 +1,10 @@
+-- // key mapping \\ -- 
+RegisterKeyMapping("invhtbar 1", "Inventory Hotbar 1", "keyboard", "1")
+RegisterKeyMapping("invhtbar 2", "Inventory Hotbar 2", "keyboard", "2")
+RegisterKeyMapping("invhtbar 3", "Inventory Hotbar 3", "keyboard", "3")
+RegisterKeyMapping("invhtbar 4", "Inventory Hotbar 4", "keyboard", "4")
+RegisterKeyMapping("invhtbar 5", "Inventory Hotbar 5", "keyboard", "5")
+RegisterKeyMapping("showhotbar", "Show Hotbar", "keyboard", "TAB") 
+RegisterKeyMapping("bukatas", "Buka Tas", "keyboard", "F2")
+RegisterKeyMapping("sangattidaksopankamuya", "Carry Player", "keyboard", "G")
+RegisterKeyMapping("emotemenuuu", "Buka Walking Menu", "keyboard", "F3")

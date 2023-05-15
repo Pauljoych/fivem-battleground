@@ -1,0 +1,44 @@
+*, *::after, *::before {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+	cursor: default;
+}
+
+#wrap {
+    width: 13.0vw;
+    min-height: auto;
+    /* margin-top: 80@; */
+    margin-top: 780px;
+    margin-left: 25px;
+    margin-right: auto;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 2.5px solid #000;
+	color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    overflow: visible;
+    box-shadow: 0px 0px 5px 5px #0000003c;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-weight: inherit;
+    font-family: cursive;
+    height: 6.0vh;
+    width: 100%;
+    filter: drop-shadow(0 0 1rem black);
+}
+
+.header a {
+	padding: 5%;
+}
+
+.playerlist {
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	border: none;
+}

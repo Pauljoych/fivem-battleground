@@ -1,0 +1,17 @@
+-- CreateThread(function()
+-- 	while true do
+-- 		Wait(1)
+-- 		SetVehicleDensityMultiplierThisFrame(0.0) -- set traffic density to 0 
+-- 		SetPedDensityMultiplierThisFrame(0.0)
+-- 		SetRandomVehicleDensityMultiplierThisFrame(5.0) -- set random vehicles (car scenarios / cars driving off from a parking spot etc.) to 0
+-- 		SetParkedVehicleDensityMultiplierThisFrame(5.0) -- set random parked vehicles (parked car scenarios) to 0
+-- 		SetScenarioPedDensityMultiplierThisFrame(0.0, 0.0)
+-- 		SetGarbageTrucks(false) -- Stop garbage trucks from randomly spawning
+-- 		SetRandomBoats(false) -- Stop random boats from spawning in the water.
+-- 		SetCreateRandomCops(false) -- disable random cops walking/driving around.
+-- 		SetCreateRandomCopsNotOnScenarios(false) -- stop random cops (not in a scenario) from spawning.
+-- 		SetCreateRandomCopsOnScenarios(false) -- stop random cops (in a scenario) from spawning.
+-- 		StartAudioScene('CHARACTER_CHANGE_IN_SKY_SCENE')
+--     	SetAudioFlag("PoliceScannerDisabled",true); 
+-- 	end
+-- end)

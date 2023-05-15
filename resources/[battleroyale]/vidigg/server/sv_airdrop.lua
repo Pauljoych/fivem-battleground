@@ -1,0 +1,53 @@
+-- ESX = exports["vd_core"]:getSharedObject()
+
+-- local drop = false
+-- local dropdown = false
+
+-- AddEventHandler('onResourceStart', function(resourceName)
+--     if (GetCurrentResourceName() == resourceName) then
+--         Timer()
+--     end
+-- end)
+
+-- function Timer()
+--     SetTimeout(Config.DropDownTime, function()
+--         SetTimeout(10 * 60 * 1000, function()
+--             if Config.PlayersCheck then
+--                 local xAll = ESX.GetPlayers()
+--                 if #xAll >= Config.HowPlayers then
+--                     math.randomseed(GetGameTimer())
+--                     drop = false
+--                     TriggerClientEvent('wais:CreateDrop', -1, math.random(1, #Config.Coords))
+--                 end
+--             else
+--                 math.randomseed(GetGameTimer())
+--                 drop = false
+--                 TriggerClientEvent('wais:CreateDrop', -1, math.random(1, #Config.Coords))
+--             end
+--         end)
+--     end)
+-- end
+
+-- RegisterNetEvent('wais:dropCome', function()
+--     if not dropdown then
+--         dropdown = true
+--         TriggerClientEvent('wais:setDropDown', -1)
+--     end
+-- end)
+
+-- RegisterNetEvent('wais:opendrop', function()
+--     if not drop then
+--         local src = source
+--         drop = true
+--         TriggerClientEvent('wais:deletedrop', -1)
+--         local inLabel = {}
+--         local xPlayer = ESX.GetPlayerFromId(src)
+--         for k,v in pairs (Config.Item) do
+--             xPlayer.addInventoryItem(v, 15)
+--             xPlayer.addWeapon('WEAPON_PISTOL_MK2', 250)
+--         end
+--         TriggerClientEvent('chatMessage', -1, '^1LMAO FFA ', { 255, 255, 255 }, "~y~".. GetPlayerName(src) .. "~w~ Berhasil Mengambil Airdrop")
+--         TriggerClientEvent('vd-notif:Alert', -1, "LMAO FFA", GetPlayerName(src).. " Berhasil Mengambil Airdrop")
+--         Timer()
+--     end
+-- end)

@@ -1,0 +1,25 @@
+Locales["en"] = {
+	["cash"] = "Cash",
+	["black_money"] = "moneybag",
+	["player_nearby"] = "This player is not near you anymore!",
+	["players_nearby"] = "Tidak ada orang disekitar kamu!",
+	["openinv_help"] = "Opens inventory of another player",
+	["openinv_id"] = "Player ID",
+	["no_permissions"] = "You don't have permissions to do that!",
+	["no_player"] = "Didn't find player with given ID!",
+	["player_inventory"] = "Player inventory",
+	['shop_press_menu'] = 'tekan ~INPUT_CONTEXT~ Supermarket.',
+	['have_withdrawn'] = 'Mengambil x%s %s',
+  	['have_deposited'] = 'Menyetor x%s %s',
+	['player_cannot_hold'] = 'Jumlah tidak valid!',
+	['invalid_quantity'] = 'Jumlah tidak valid',
+	['not_enough_in_property'] = 'Jumlah tidak valid!',
+	["player_info"] = "<strong> %s/%s KG",
+	["player_info_full"] = "<h4 style='color:red;'>Inventory Full</h4><br><strong>Name:</strong> %s<br><strong>Weight:</strong> %s / %s KG.",
+	-- Client side
+	['used'] = "Used",
+ 	-- Server side
+	['drop'] = "Drop",
+	['added'] = "Received (1)",
+	['removed'] = "Removed (1)",
+}

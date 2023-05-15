@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VIDI</title>
+    <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
+    <link href="./css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="./css/ui.css" rel="stylesheet" type="text/css">
+    <style>
+        #progressbar {
+            border-radius: 50px;
+         background-color: rgba(24, 26, 30, 0.5);
+        }
+        .pro {
+          background-color: #466887;
+          width: 0%;
+          height: 20px;
+          border-radius: 50px;
+        }
+        .pro1 {
+          background-color: #466887;
+          width: 0%;
+          height: 20px;
+          border-radius: 50px;
+        }
+        
+    </style>
+</head>
+<body style="background-color: rgba(0,0,0,0); font-family: 'Roboto', sans-serif !important;">
+    <script src="js/config.js"></script>
+    <script src="locales/en.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="js/inventory.js"></script>
+    <script>
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                clickOutside: true
+            });
+        });
+    </script>
+    <div id="notificacao"></div>
+    <div id="playerInventoryHotbar"></div>
+    <div id="UseBar"> </div>
+    <div class="ui">
+        <div class="inventory-info">
+            <div class="player-inv-info">
+                <span id="player-inv-label">#Royal Battleground</span><br>
+                <img style="margin-top:0.4%;width:3%;left:0px;position:absolute;display:left"src="img/weight.png">
+                    <div style="margin-left:4%;width:90%">
+                        <div id="progressbar">
+                            <div class="pro"></div>
+                        </div>
+                    </div>
+                <span id="player-inv-weight"></span>
+            </div>
+            <div class="other-inv-info">
+                <span id="other-inv-label"></span><br>
+                <img style="margin-top:0.4%;width:3%;left:0px;position:absolute;display:left"src="img/weight.png">
+                <div style="margin-left:4%;width:90%">
+                    <div id="progressbar">
+                        <div class="pro1"></div>
+                    </div>
+                </div>
+                <span id="other-inv-weight"></span>
+            </div>
+        </div>
+        <div class="inventory">
+            <div id="playerInventory"></div>
+            <div id="controls">
+                <div class="inv-options-list">
+                    <center>
+                        <input style="background-color: #466887;" type='text' id='search' class="inv-option-item" placeholder='CARI'>
+                        <input style="background-color: #466887;" type="number" id="count" class="inv-option-item" placeholder='JUMLAH' oninput="validity.valid||(value='');"></input>
+                        <div class="inv-option-item2" id="use"><p>
+                            <center>
+                                <img style="width:45%;margin-top:0%"src="img/hand-1.png">
+                            </center>
+                        </p></div>
+                        <div class="inv-option-item3" id="give"><p>
+                            <center>
+                                <img style="width:49%;margin-top:5%"src="img/GIVE2.png">
+                            </center>
+                        </p></div>
+                        <!-- <div style="background-color: #466887;" class="inv-option-item" id="give"><p>Give</p></div> -->
+                    </center>
+                </div>
+            </div>
+            <div id="otherInventory">
+            </div>
+        </div>
+        <div class="inv-background"></div>
+    </div>
+    <div id="dialog">
+        <div id="nearPlayers">
+        </div>
+    </div>
+
+    <div id="use-alert"></div>
+    <div id="action-bar"></div>
+</body>
+</html>

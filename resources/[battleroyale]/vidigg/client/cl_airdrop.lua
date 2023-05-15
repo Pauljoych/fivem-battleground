@@ -1,0 +1,281 @@
+-- ESX = exports["vd_core"]:getSharedObject()
+
+-- local dropobj = nil
+-- local parachuteobj = nil
+-- local DropDown = false
+-- local seconds = 0
+-- local blip = nil
+-- local blip2 = nil
+-- local StartCheck = false
+-- local dropZcoords = nil
+-- local dropCoords = nil
+-- local dropCoordsChecked = false
+
+-- RegisterNetEvent('wais:CreateDrop', function(coords)
+
+--     dropCoords = coords
+--     -- DrawScaleform(Config.DropCome.title, Config.DropCome.msg, Config.DropCome.showSeconds)
+--     CreateBlip(coords)
+--     if not Config.CaseProp then return end
+-- 	RequestModel(Config.CaseProp)
+-- 	while (not HasModelLoaded(Config.CaseProp)) do
+-- 		Citizen.Wait(1)
+-- 	end
+--     dropobj = CreateObject(GetHashKey(Config.CaseProp), Config.Coords[coords].x, Config.Coords[coords].y, Config.Coords[coords].z + 100.0, false, false, false)
+--     parachuteobj = CreateObject(GetHashKey(Config.ParachuteProp), Config.Coords[coords].x, Config.Coords[coords].y, Config.Coords[coords].z + 350.0, false, false, false)
+--     AttachEntityToEntity(parachuteobj, dropobj, 0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+
+--     local foundGround, zpos = GetGroundZFor_3dCoord(Config.Coords[coords].x, Config.Coords[coords].y, Config.Coords[coords].z)
+--     local foundGround2, zpos2 = GetGroundZFor_3dCoord(GetEntityCoords(dropobj).x, GetEntityCoords(dropobj).y, GetEntityCoords(dropobj).z)
+--     soundID = GetSoundId() 
+--     PlaySoundFromEntity(soundID, "Crate_Beeps", dropobj, "MP_CRATE_DROP_SOUNDS", true, 0) 
+--     StartCheck = true
+
+--     CreateThread(function()
+--         while StartCheck do
+--             local ped = PlayerPedId()
+--             local pedCoords = GetEntityCoords(ped)
+--             local dropCoords = GetEntityCoords(dropobj)
+--             local distance = #(pedCoords - dropCoords)
+--             if distance < 300.0 then
+--                 if not dropCoordsChecked then
+--                     foundGround, zpos = GetGroundZFor_3dCoord(Config.Coords[coords].x, Config.Coords[coords].y, Config.Coords[coords].z)
+--                     foundGround2, zpos2 = GetGroundZFor_3dCoord(GetEntityCoords(dropobj).x, GetEntityCoords(dropobj).y, GetEntityCoords(dropobj).z)
+--                     if foundGround and foundGround2 then
+--                         dropCoordsChecked = true
+--                     end
+--                     break
+--                 end
+--             end
+--             Wait(500)
+--         end
+--     end)
+
+--     CreateThread(function()
+--         while StartCheck do
+--             Wait(300)
+--             ActivatePhysics(dropobj)
+--             SetDamping(dropobj, 2, 0.1)
+--             SetEntityVelocity(dropobj, 0.0, 0.0, -0.2)
+--             SetEntityLodDist(parachuteobj, 1000)
+--         end
+--     end)
+
+--     dropZcoords = zpos
+
+--     CreateThread(function()
+--         while true do
+--             if GetEntityHeightAboveGround(dropobj) <= 1 then
+--                 --SetEntityCoords(dropobj, Config.Coords[coords].x, Config.Coords[coords].y, zpos + 0.25)
+--                 DeleteObject(parachuteobj)
+--                 parachuteobj = nil
+--                 SecondsToClock()
+--                 Timer()
+--                 seconds = Config.DropWaitTime
+--                 DropDown = true
+--                 FreezeEntityPosition(dropobj, true)
+--                 StartCheck = false
+--                 if not dropDownServer then
+--                     dropDownServer = true
+--                     TriggerServerEvent('wais:dropCome')
+--                 end
+--                 break
+--             end
+--             Wait(1)
+--         end
+--     end)
+    
+-- end)
+
+-- RegisterNetEvent('wais:setDropDown', function()
+--     dropDownServer = true
+--     SetEntityCoords(dropobj, Config.Coords[dropCoords].x, Config.Coords[dropCoords].y, dropZcoords + 0.25)
+--     DeleteObject(parachuteobj)
+--     StopSound(soundID)
+--     ReleaseSoundId(soundID)
+--     parachuteobj = nil
+--     SecondsToClock()
+--     Timer()
+--     seconds = Config.DropWaitTime
+--     DropDown = true
+--     FreezeEntityPosition(dropobj, true)
+--     StartCheck = false
+--     dropCoordsChecked = false
+-- end)
+
+-- RegisterNetEvent('wais:deletedrop', function()
+--     RemoveBlip(blip)
+--     RemoveBlip(blip2)
+--     DeleteObject(dropobj)
+--     StopSound(soundID)
+--     ReleaseSoundId(soundID)
+--     dropobj = nil
+--     DropDown = false
+--     dropCoordsChecked = false
+-- end)
+
+-- CreateThread(function()
+--     while true do
+--         local sleep = 1000
+--         if DropDown then
+--             local ped = PlayerPedId()
+--             local ec = GetEntityCoords(dropobj)
+--             local distance = GetDistanceBetweenCoords(GetEntityCoords(ped), ec.x, ec.y, ec.z, true)
+--             if distance < Config.JarakAirdrop then
+--                 sleep = 5
+--                 if distance < 2 then
+--                     sleep = 2
+--                     if seconds >= 1 then
+--                         DrawText3D(ec.x, ec.y, ec.z + 0.4, SecondsToClock())
+--                     else
+--                         lib.showTextUI('[E] - Ambil Airdrop', {
+--                             position = "right-center",
+--                             icon = 'box',
+--                             style = {
+--                                 borderRadius = 0,
+--                                 backgroundColor = '#810e0e',
+--                                 color = 'white'
+--                             }
+--                         })
+--                         DrawText3D(ec.x, ec.y, ec.z + 0.4, '[E] - ~r~Ambil Airdrop')
+--                         lib.hideTextUI()
+--                         if IsControlJustReleased(0, 46) then
+--                             if not IsPedInAnyVehicle(ped, false) then
+--                                 if not IsEntityDead(ped) then
+--                                     ambilairdrop()
+--                                     lib.hideTextUI()
+--                                 end
+--                             end
+--                         end
+--                     end
+--                 end
+--             end
+--         end
+--         Wait(sleep)
+--     end
+-- end)
+
+-- function LoadAnimDict(dict)
+--     while (not HasAnimDictLoaded(dict)) do
+--         RequestAnimDict(dict)
+--         Citizen.Wait(10)
+--     end    
+-- end
+
+-- function ambilairdrop()
+-- 	LoadAnimDict('amb@medic@standing@kneel@base')
+-- 	LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+-- 	TaskPlayAnim(cache.ped, "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+-- 	TaskPlayAnim(cache.ped, "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+--     local berhasil = lib.progressCircle({
+--         duration = 15000,
+--         label = 'Membuka Airdrop',
+--         useWhileDead = false,
+--         position = 'bottom',
+--         canCancel = true,
+--         disable = {
+--         car = false,
+--         combat = true,
+--         mouse = false,
+--          move = false,
+--         },
+--     })
+--     if berhasil then
+--         TriggerServerEvent('wais:opendrop')
+--         ClearPedTasksImmediately(cache.ped)
+--         StopSound(soundID)
+--         ReleaseSoundId(soundID)
+--     else
+--         ESX.ShowNotification("LMAO FFA", "Airdrop Dibatalkan!", 2000, 'error')
+--         ClearPedTasksImmediately(cache.ped)
+--     end
+-- end
+
+-- AddEventHandler('onResourceStop',function()
+--     RemoveBlip(blip)
+--     RemoveBlip(blip2)
+--     DeleteObject(dropobj)
+--     StopSound(soundID)
+--     ReleaseSoundId(soundID)
+--     dropobj = nil
+--     DropDown = false
+--     dropCoordsChecked = false
+-- end)
+
+-- function CreateBlip(coords)
+--     blip = AddBlipForRadius(Config.Coords[coords].x,Config.Coords[coords].y,Config.Coords[coords].z, 150.0)
+--     SetBlipHighDetail(blip, true)
+--     SetBlipColour(blip, 3)
+--     SetBlipAlpha (blip, 128)
+
+--     blip2 = AddBlipForCoord(Config.Coords[coords].x,Config.Coords[coords].y,Config.Coords[coords].z)
+--     SetBlipSprite (blip2, 94)
+--     SetBlipColour (blip2, 4)
+--     SetBlipAsShortRange(blip2, true)
+
+--     BeginTextCommandSetBlipName("STRING")
+--     AddTextComponentString("Airdrop Zone")
+--     EndTextCommandSetBlipName(blip2)
+-- end
+
+-- function Timer()
+--     CreateThread(function()
+--         while true do
+--             if seconds >= 1 then
+--                 seconds = seconds - 1
+--             else
+--                 break
+--             end
+--             Wait(1000)
+--         end
+--     end)
+-- end
+
+-- function SecondsToClock()
+--     if seconds <= 0 then
+--         return "00:00:00";
+--     else
+--         hours = string.format("%02.f", math.floor(seconds/3600));
+--         mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+--         secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+--         return hours..":"..mins..":"..secs
+--     end
+-- end
+
+-- function DrawText3D(x,y,z, text)
+--     local onScreen,_x,_y=World3dToScreen2d(x,y,z)
+--     local px,py,pz=table.unpack(GetGameplayCamCoords())
+    
+--     SetTextScale(0.28, 0.28)
+--     SetTextFont(0)
+--     SetTextProportional(1)
+--     SetTextColour(255, 255, 255, 215)
+--     SetTextDropshadow(0)
+--     SetTextEntry("STRING")
+--     SetTextCentre(1)
+--     AddTextComponentString(text)
+--     DrawText(_x,_y)
+--     local factor = (string.len(text)) / 250
+--     DrawRect(_x,_y +0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
+-- end
+
+-- function DrawScaleform(bigMsg,smallMsg,time)
+--     CreateThread(function(...)  
+--         local scaleform = RequestScaleformMovie("mp_big_message_freemode")
+--         while not HasScaleformMovieLoaded(scaleform) do
+--             Citizen.Wait(0)
+--         end
+      
+--         BeginScaleformMovieMethod(scaleform, "SHOW_SHARD_WASTED_MP_MESSAGE")
+--         PushScaleformMovieMethodParameterString(bigMsg)
+--         PushScaleformMovieMethodParameterString(smallMsg)
+--         PushScaleformMovieMethodParameterInt(5)
+--         EndScaleformMovieMethod()
+      
+--         local timer = GetGameTimer()
+--         while GetGameTimer() - timer < time * 1000 do
+--             Citizen.Wait(0)
+--             DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+--         end
+--     end)
+-- end

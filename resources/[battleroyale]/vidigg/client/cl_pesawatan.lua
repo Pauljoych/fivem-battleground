@@ -1,0 +1,161 @@
+-- local function reqmodel(model)
+--     if type(model) == 'string' then model = GetHashKey(model) end
+--     if not IsModelInCdimage(model) then print('Model not exists:', model); return false end
+--     ESX.Streaming.RequestModel(model, function()
+--     end)
+--     return true
+-- end
+
+-- local pesawatwoi = 0
+-- local pilotpesawat = 0
+
+-- -- function DOING_TASK(ped)
+-- --     return (GetIsTaskActive(ped, 2)==1 or GetIsTaskActive(ped, 152)==1 or GetIsTaskActive(ped, 167)==1 or GetIsTaskActive(ped, 95)==1)
+-- -- end
+
+-- function turundaripesawat()
+--     -- DrawBigMessage('Tekan F Untuk Turun', 5000)
+--     ESX.Scaleform.ShowFreemodeMessage('5', 'Tekan F Untuk Turun', 1)
+--     while DoesEntityExist(pesawatwoi) do
+--         Wait(5)
+--         DisableControlAction(1, 75, true)
+--         if IsDisabledControlJustPressed(1, 75) then
+--             SetEntityVisible(PlayerPedId(), true, 0)
+--             SetEntityInvincible(cache.ped, false)
+--             EnableControlAction(1, 75, true)
+--             TriggerServerEvent('addweapon:pistol')
+--             local pos = GetEntityCoords(pesawatwoi)
+--             SetEntityCoords(cache.ped, pos.x, pos.y, pos.z-5.0, GetEntityHeading(pesawatwoi), 0, 0, false)
+--             return true
+--         end
+--     end
+--     return false
+-- end
+
+-- function CreatePlane()
+--     if reqmodel(Vidi.Game.PlaneModel) then
+--         math.randomseed(GetGameTimer())
+--         randoma = math.random(1, #Vidi.Game.Planes)
+--         -- CREATE PLANE
+--         pesawatwoi = CreateVehicle(Vidi.Game.PlaneModel, Vidi.Game.Planes[randoma].spawnawal.x, Vidi.Game.Planes[randoma].spawnawal.y, Vidi.Game.Planes[randoma].spawnawal.z, Vidi.Game.Planes[randoma].spawnawal.w, false, true)
+--         -- while not DoesEntityExist(pesawatwoi) do Wait(10) end
+--         SetVehicleDoorsLocked(pesawatwoi, 4)
+--         FreezeEntityPosition(pesawatwoi, true)
+--         -- CREATE PILOT
+--         if reqmodel(`s_m_y_pilot_01`) then
+--             pilotpesawat = CreatePedInsideVehicle(pesawatwoi, 4, `s_m_y_pilot_01`, -1, false, true)
+--             -- while not DoesEntityExist(pilotpesawat) do Wait(10) end
+--             -- CreateThread(function()
+--             --     while DoesEntityExist(pilotpesawat) == 1 do
+--             --         if DOING_TASK(pilotpesawat) then
+--             --             ClearPedTasks(pilotpesawat)
+--             --         end
+--             --         Wait(5)
+--             --     end
+--             -- end)
+--         end
+--         --
+--         SetVehicleEngineOn(pesawatwoi, true, true, false)
+--         SetEntityAsMissionEntity(pesawatwoi,0,0)
+--         SetEntityAsMissionEntity(pilotpesawat,0,0)
+--         SetVehicleForwardSpeed(pesawatwoi, 100.0)
+--         SetHeliBladesSpeed(pesawatwoi, 100.0)
+--         SetEntityCollision(pesawatwoi, 0, 1)
+--         SetVehicleLandingGear(pesawatwoi, 1)
+--         Citizen.InvokeNative(0xCFC8BE9A5E1FE575, pesawatwoi, 0)
+--         return pesawatwoi, pilotpesawat, randoma
+--     end
+-- end
+
+-- function RemovePlane()
+--     if DoesEntityExist(pesawatwoi) then
+--         DeleteEntity(pesawatwoi)
+--         DeleteEntity(pilotpesawat)
+--         pesawatwoi = 0
+--         pilotpesawat = 0
+--     end
+-- end
+
+-- local announcements = false
+-- local mulaihitung = function(title, msg)
+--     if announcements then return end
+--     announcements = true
+--     local ScaleformHandle = ESX.Scaleform.Utils.RequestScaleformMovie("STUNT_JUMPS")    
+--     BeginScaleformMovieMethod(ScaleformHandle, "SHOW_SHARD_STUNT_JUMP") 
+--     PushScaleformMovieMethodParameterString(title) 
+--     PushScaleformMovieMethodParameterString(msg) 
+--     EndScaleformMovieMethod() 
+--     CreateThread(function()
+--         while announcements do 
+--             Wait(1)
+--             DrawScaleformMovieFullscreen(ScaleformHandle, 255, 255, 255, 255) 
+--         end
+--     end)
+--     -- Citizen.Wait(5000)
+--     -- announcements = false
+-- end
+
+
+-- RegisterNetEvent('pesawat:br', function()
+--     -- TriggerServerEvent('rc:inbattleroyale')
+--     CreatePlane()
+--     revivemen(cache.ped, GetEntityCoords(cache.ped), GetEntityHeading(cache.ped))
+--     SetEntityVisible(PlayerPedId(), false, 0)
+--     TriggerServerEvent('mectov:clear')
+--     RemoveAllPedWeapons(cache.ped, true)
+--     SetPedIntoVehicle(cache.ped, pesawatwoi, -2)
+--     Wait(1000)
+--     GiveWeaponToPed(cache.ped, `gadget_parachute`, 1, false, true)
+--     SetPedGadget(cache.ped, `gadget_parachute`, true)
+--     NetworkOverrideClockTime(12, 0, 0)
+--     SetPedArmour(cache.ped, 0)
+--     PlayNowSound("5s_To_Event_Start_Countdown", "GTAO_FM_Events_Soundset")
+-- 	-- DrawBigMessage('~r~GAME DIMULAI DALAM 5 DETIK', 5000)
+--     mulaihitung('~r~GAME DIMULAI DALAM 5 DETIK')
+--     Wait(1000)
+--     announcements = false
+--     Wait(20)
+--     mulaihitung('~r~GAME DIMULAI DALAM 4 DETIK')
+--     Wait(1000)
+--     announcements = false
+--     Wait(20)
+--     mulaihitung('~r~GAME DIMULAI DALAM 3 DETIK')
+--     Wait(1000)
+--     announcements = false
+--     Wait(20)
+--     mulaihitung('~r~GAME DIMULAI DALAM 2 DETIK')
+--     Wait(1000)
+--     announcements = false
+--     Wait(20)
+--     mulaihitung('~r~GAME DIMULAI DALAM 1 DETIK')
+--     Wait(1000)
+--     announcements = false
+--     Wait(20)
+--     mulaihitung('~r~GOOD LUCK')
+--     Wait(1000)
+--     announcements = false
+--     SetEntityHealth(cache.ped, GetEntityMaxHealth(cache.ped))
+--     SetWeatherTypeNow('extrasunny')
+--     SetWeatherTypeNowPersist('extrasunny')
+--     SetOverrideWeather('extrasunny')
+--     Wait(4000)
+--     TriggerEvent('sip:oke')
+--     TaskPlaneMission(pilotpesawat, pesawatwoi, 0, 0,
+-- 		Vidi.Game.Planes[randoma].tujuanAkhir.x, Vidi.Game.Planes[randoma].tujuanAkhir.y, Vidi.Game.Planes[randoma].tujuanAkhir.z,
+-- 		4, 100.0, 0, GetEntityHeading(pesawatwoi), Vidi.Game.Planes[randoma].tujuanAkhir.z+1.0, Vidi.Game.Planes[randoma].tujuanAkhir.x-1.0)
+--         FreezeEntityPosition(pesawatwoi, false)
+--         Wait(10000)
+--         turundaripesawat()
+--         Wait(10000)
+--         print('pesawat terhapus')
+--         RemovePlane()
+--         -- ESX.Game.DeleteVehicle(pesawatwoi)
+--         -- ESX.Game.DeleteObject(pilotpesawat)
+--         -- ESX.Game.DeleteObject(pesawatwoi)
+-- end)
+
+-- function PlayNowSound(audioName, audioRef)
+-- 	SetAudioFlag("LoadMPData", true)
+-- 	PlaySoundFrontend(-1, audioName, audioRef, true)
+-- end
+

@@ -1,0 +1,16 @@
+alpine-baselayout
+alpine-keys
+apk-tools
+busybox
+c-ares
+ca-certificates
+curl=7.72.0-r99
+libatomic
+libc-utils
+libcrypto1.1
+libssl1.1
+libstdc++
+libunwind
+musl-dbg
+v8~9.3
+zlib

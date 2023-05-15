@@ -1,0 +1,27 @@
+RegisterCommand("removedbc", function(source, args)
+    if source == 0 then
+        MySQL.Async.execute('TRUNCATE TABLE ranking_crew', function()
+            print("ranking_crew Database cleared!")
+        end)
+        MySQL.Async.execute('TRUNCATE TABLE ev_leaderboard', function()
+            print("ev_leaderboard Database cleared!")
+        end)
+        MySQL.Async.execute('TRUNCATE TABLE crew', function()
+            print("crew Database cleared!")
+        end)
+    else
+        print("Hanya bisa dilakukan di Console")
+    end
+end, false)
+
+ESX.RegisterCommand('removedb', 'admin', function() 
+	MySQL.Async.execute('TRUNCATE TABLE ranking_crew', function()
+        print("ranking_crew Database cleared!")
+    end)
+    MySQL.Async.execute('TRUNCATE TABLE ev_leaderboard', function()
+        print("ev_leaderboard Database cleared!")
+    end)
+    MySQL.Async.execute('TRUNCATE TABLE crew', function()
+        print("crew Database cleared!")
+    end)
+end, false)

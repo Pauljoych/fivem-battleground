@@ -1,0 +1,224 @@
+body {
+    width: calc(95% - 3vh);
+    height: calc(100vh - 2vh);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 10vh;
+    user-select: none;
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+    gap: 1vh;
+    transition: .2s;
+    -webkit-transition: .2s ease-in-out;
+}
+
+body::-webkit-scrollbar {
+    display:none;
+    margin: 0;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@300;600&display=swap");
+
+@font-face {
+    font-family: regular;
+    src: url(fonts/Metropolis-Regular.otf);
+}
+
+@font-face {
+    font-family: medium;
+    src: url(fonts/Metropolis-Medium.otf);
+}
+
+@font-face {
+    font-family: bold;
+    src: url(fonts/Metropolis-Bold.otf);
+}
+
+@font-face {
+    font-family: italic;
+    src: url(fonts/SignPainter\HouseScript.ttf);
+}
+
+@font-face {
+    font-family: x;
+    src: url(fonts/x.ttf);
+}
+
+@font-face {
+    font-family: bone;
+    src: url(fonts/bones.ttf);
+}
+
+@font-face {
+    font-family: x2;
+    src: url(fonts/x2.ttf);
+}
+
+@font-face {
+    font-family: x3;
+    src: url(fonts/x3.ttf);
+}
+
+.wrapper {
+    position: relative;
+    width: fit-content;
+    height: calc(3.5vh - 1vh);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(37, 37, 37, 0.719);
+    padding: .5vh;
+    border-radius: .25vh;
+    gap: 1vh;
+    border-bottom: .1vh solid transparent;
+    /* margin-right: -50vh; */
+}
+
+.wrapper.me {
+    border-bottom-color: #f11717b6;
+}
+
+.wrapper.me > .wcombo > span {
+    color: #f11717b6;
+}
+
+.wrapper.me > .wleft > span {
+    color: #f11717b6;
+}
+
+.wrapper.me > .wright > span {
+    color: #f11717b6;
+}
+
+.wrapper.me > .wii > img {
+    filter: sepia(100%) hue-rotate(135deg) saturate(500%);
+}
+
+.wrapper.me > .wii > i {
+    color: rgb(0, 195, 255);
+}
+
+.wrapper.death {
+    border-bottom-color: #de5454;
+}
+
+.wrapper.death > .wcombo > span {
+    color: #d45e5e;
+}
+
+.wrapper.death > .wleft > span {
+    color: #d45e5e;
+}
+
+.wrapper.death > .wright > span {
+    color: #d45e5e;
+}
+
+.wrapper.death > .wii > img {
+    filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-10deg) saturate(650%) contrast(0.8);
+}
+
+.wrapper.death > .wii > i {
+    color: #d45e5e;
+}
+
+.wcombo {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .25vh;
+}
+
+.wcombo > span {
+    color: rgb(255, 255, 255);
+    font-size: 1.75vh;
+    font-family: x3;
+}
+
+.wleft, .wright {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.wleft > span {
+    color: #fff;
+    font-size: 1.5vh;
+    font-family: medium;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+}
+
+.wright > span {
+    color: rgba(194, 65, 65, 0.801);
+    font-size: 1.5vh;
+    font-family: medium;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+}
+
+.wii {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vh;
+}
+
+.wii > img {
+    width: 6vw;
+}
+
+.wii > i {
+    color: #fff;
+    font-size: 1.75vh;
+    transform: rotate(-20deg);
+}
+
+#x {
+    font-size: 1.75vh;
+    font-family: x;
+    margin-left: .1vh;
+    font-weight: bold;
+}
+
+.wkill, .wdeath {
+    position: absolute;
+    left: -4vh;
+    width: 2.5vh;
+    height: 2.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(88, 49, 49, 0.622);
+    padding: .25vh;
+    border-radius: 8vh;
+}
+
+.wkill > i {
+    color: #0f84c7;
+    font-size: 2vh;
+}
+
+.wdeath > i {
+    color: #de5454;
+    font-size: 1.75vh;
+}
+
+.killanim {
+    width: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 5vh;
+    right: 35%;
+}
