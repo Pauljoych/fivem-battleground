@@ -1,4 +1,5 @@
 cache/*
 db/*
 alpine/*
+txData/*
 resources/\[assets\]/
