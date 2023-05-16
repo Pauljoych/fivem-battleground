@@ -175,6 +175,7 @@ local casterMode = false
 RegisterNetEvent('casterMode')
 AddEventHandler('casterMode', function(pState)
     casterMode = pState
+    if casterMode then ChangeWeather(0x36A83D84) end
 end)
 
 local curentWeather = 0x36A83D84 -- Clear
