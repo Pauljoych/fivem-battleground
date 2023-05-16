@@ -26,16 +26,16 @@ end
 
 function zoneNotification()
     local coolDown = 60 * 1000
-    ESX.ShowNotification("INFO", "Zona Berpindah", 2500, 'success')
+    ESX.ShowNotification('INFO', 'Zona Berpindah', 2500, 'success')
     Citizen.Wait(7000)
-    ESX.ShowNotification("INFO", "Zona akan pindah dalam waktu 3 menit", 2500, 'info')
-    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "Zona akan pindah dalam waktu 3 menit")
+    ESX.ShowNotification('INFO', 'Zona akan pindah dalam waktu 3 menit', 2500, 'info')
+    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, 'Zona akan pindah dalam waktu 3 menit')
     Citizen.Wait(coolDown)
-    ESX.ShowNotification("INFO", "Zona akan pindah dalam waktu 2 menit", 2500, 'info')
-    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "Zona akan pindah dalam waktu 2 menit")
+    ESX.ShowNotification('INFO', 'Zona akan pindah dalam waktu 2 menit', 2500, 'info')
+    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, 'Zona akan pindah dalam waktu 2 menit')
     Citizen.Wait(coolDown)
-    ESX.ShowNotification("INFO", "Zona akan pindah dalam waktu 1 menit", 2500, 'info')
-    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "Zona akan pindah dalam waktu 1 menit")
+    ESX.ShowNotification('INFO', 'Zona akan pindah dalam waktu 1 menit', 2500, 'info')
+    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, 'Zona akan pindah dalam waktu 1 menit')
     Citizen.Wait(coolDown)
 end
 
@@ -44,7 +44,7 @@ AddEventHandler('vidigg:customZone', function(pZoneCoords, pRandomNum)
     local coolDown = 60 * 1000
     local randomNumIndex = 1
 
-    ESX.ShowNotification("INFO", "Dalam Waktu 1 Menit Zona Akan Muncul ", 5500, 'info')
+    ESX.ShowNotification('INFO', 'Dalam Waktu 1 Menit Zona Akan Muncul ', 5500, 'info')
     Citizen.Wait(coolDown)
     zoneState = true
     TriggerEvent('vidigg:setCurrentSafezone', {
@@ -118,7 +118,7 @@ AddEventHandler('vidigg:customZone', function(pZoneCoords, pRandomNum)
     })
     zoneNotification()
 
-    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "Zona Habis")
+    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, 'Zona Habis')
     randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
         x = pZoneCoords.x + pRandomNum[randomNumIndex],
@@ -126,7 +126,7 @@ AddEventHandler('vidigg:customZone', function(pZoneCoords, pRandomNum)
         z = 0,
         radius = 0
     })
-    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "END")
+    TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, 'END')
 end)
 
 RegisterNetEvent('vidigg:setTargetSafezone')
@@ -161,19 +161,32 @@ CreateThread(function()
             if isPlayerOutOfZone(currentSafezoneCoord, currentSafezoneRadius) then
                 local currentHealth = GetEntityHealth(pPed)
                 local newHealth = math.min(currentHealth - zoneDamage)
-                ESX.ShowNotification("INFO", "Kamu Diluar Zona", 2500, 'info')
+                ESX.ShowNotification('INFO', 'Kamu Diluar Zona', 2500, 'info')
                 SetEntityHealth(pPed, newHealth)
+                ChangeWeather(0xC91A3202) -- Clear
+            else
+                ChangeWeather(0x36A83D84) -- Halloween
             end
         end
     end
 end)
 
-function ChangeWeather(weather)
+local casterMode = false
+RegisterNetEvent('casterMode')
+AddEventHandler('casterMode', function(pState)
+    casterMode = pState
+end)
+
+local curentWeather = 0x36A83D84 -- Clear
+function ChangeWeather(pWeather)
+    if curentWeather == pWeather or casterMode then return end
+
     ClearOverrideWeather()
     ClearWeatherTypePersist()
-    SetWeatherTypePersist(weather)
-    SetWeatherTypeNow(weather)
-    SetWeatherTypeNowPersist(weather)
+    SetWeatherTypePersist(pWeather)
+    SetWeatherTypeNow(pWeather)
+    SetWeatherTypeNowPersist(pWeather)
+    curentWeather = pWeather
 end
 
 local IsSafezoneArriveAtTarget = true
@@ -184,14 +197,12 @@ function CreateTargetSafezoneBlip(tSafezoneCoord, tSafezoneRadius)
     SetBlipPriority(TargetSafezoneBlip, 5)
 end
 
-local currentGameTime
-
 CreateThread(function()
+    local currentGameTime
+
     while true do
         if targetSafezoneCoord and targetSafezoneRadius then
-            if not currentGameTime then
-                currentGameTime = GetGameTimer()
-            end
+            if not currentGameTime then currentGameTime = GetGameTimer() end
 
             local deltaTime = GetTimeDifference(GetGameTimer(), currentGameTime)
             currentGameTime = GetGameTimer()
@@ -204,18 +215,14 @@ CreateThread(function()
                 currentSafezoneRadius = math.lerp(currentSafezoneRadius, targetSafezoneRadius, 0.03 * (deltaTime / 5000))
                 isArrive = isArrive and false
             end
-            if isArrive == true then
-                RemoveBlip(TargetSafezoneBlip)
-            end
+            if isArrive == true then RemoveBlip(TargetSafezoneBlip) end
         end
         currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
         SetBlipPriority(currentSafezoneBlip, 1)
         if zoneState then
             if currentSafezoneCoord and currentSafezoneRadius then
                 if targetSafezoneCoord and targetSafezoneRadius then
-                    if not currentGameTime then
-                        currentGameTime = GetGameTimer()
-                    end
+                    if not currentGameTime then currentGameTime = GetGameTimer() end
 
                     local deltaTime = GetTimeDifference(GetGameTimer(), currentGameTime)
                     currentGameTime = GetGameTimer()
@@ -228,9 +235,7 @@ CreateThread(function()
                         currentSafezoneRadius = math.lerp(currentSafezoneRadius, targetSafezoneRadius, 0.03 * (deltaTime / 5000))
                         isArrive = isArrive and false
                     end
-                    if isArrive == true then
-                        RemoveBlip(TargetSafezoneBlip)
-                    end
+                    if isArrive == true then RemoveBlip(TargetSafezoneBlip) end
                 end
                 currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
                 SetBlipPriority(currentSafezoneBlip, 1)
