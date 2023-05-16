@@ -18,7 +18,11 @@ end
 
 function isPlayerOutOfZone()
     local pPos = GetEntityCoords(GetPlayerPed(PlayerId()))
+<<<<<<< HEAD
     local pDistance = math.abs(GetDistanceBetweenCoords(playerPos.x, playerPos.y, 0, currentSafezoneCoord.x, currentSafezoneCoord.y, 0, false))
+=======
+    local pDistance = math.abs(GetDistanceBetweenCoords(pPos.x, pPos.y, 0, currentSafezoneCoord.x, currentSafezoneCoord.y, 0, false))
+>>>>>>> e74b1eb (fix: Patch zone)
 
     return pDistance > currentSafezoneRadius
 end
@@ -38,16 +42,26 @@ function zoneNotification()
     Citizen.Wait(coolDown)
 end
 
+<<<<<<< HEAD
 RegisterNetEvent('vidigg:cutomZone')
 AddEventHandler('vidigg:cutomZone', function(pZoneCoords)
+=======
+RegisterNetEvent('vidigg:customZone')
+AddEventHandler('vidigg:customZone', function(pZoneCoords)
+>>>>>>> e74b1eb (fix: Patch zone)
     local coolDown = 60 * 1000
 
     ESX.ShowNotification("INFO", "Dalam Waktu 1 Menit Zona Akan Muncul ", 5500, 'info')
     Citizen.Wait(coolDown)
     zoneState = true
     TriggerEvent('vidigg:setCurrentSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 5000
     })
@@ -55,56 +69,91 @@ AddEventHandler('vidigg:cutomZone', function(pZoneCoords)
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 1500
     })
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 1200
     })
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 1200
     })
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 1000
     })
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 600
     })
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 300
     })
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 150
     })
@@ -112,8 +161,13 @@ AddEventHandler('vidigg:cutomZone', function(pZoneCoords)
 
     TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "Zona Habis")
     TriggerEvent('vidigg:setTargetSafezone', {
+<<<<<<< HEAD
         x = pZoneCoords.x + math.random(-500, 500),
         y = pZoneCoords.y + math.random(-500, 500),
+=======
+        x = pZoneCoords.x,
+        y = pZoneCoords.y,
+>>>>>>> e74b1eb (fix: Patch zone)
         z = 0,
         radius = 0
     })
@@ -144,6 +198,7 @@ AddEventHandler('vidigg:setCurrentSafezone', function(pSafezone)
 end)
 
 CreateThread(function()
+<<<<<<< HEAD
     while zoneState do
         Citizen.Wait(10000)
         local pPed = PlayerPedId()
@@ -153,6 +208,19 @@ CreateThread(function()
             local newHealth = math.min(currentHealth - zoneDamage)
             ESX.ShowNotification("INFO", "Kamu Diluar Zona", 2500, 'info')
             SetEntityHealth(pPed, newHealth)
+=======
+    while true do
+        Citizen.Wait(10000)
+        if zoneState then
+            local pPed = PlayerPedId()
+
+            if isPlayerOutOfZone(currentSafezoneCoord, currentSafezoneRadius) then
+                local currentHealth = GetEntityHealth(pPed)
+                local newHealth = math.min(currentHealth - zoneDamage)
+                ESX.ShowNotification("INFO", "Kamu Diluar Zona", 2500, 'info')
+                SetEntityHealth(pPed, newHealth)
+            end
+>>>>>>> e74b1eb (fix: Patch zone)
         end
     end
 end)
@@ -177,6 +245,7 @@ local currentGameTime
 
 CreateThread(function()
     while true do
+<<<<<<< HEAD
         if currentSafezoneCoord and currentSafezoneRadius then
             if targetSafezoneCoord and targetSafezoneRadius then
                 if not currentGameTime then
@@ -200,6 +269,35 @@ CreateThread(function()
             end
             currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
             SetBlipPriority(currentSafezoneBlip, 1)
+=======
+        if zoneState then
+            if currentSafezoneCoord and currentSafezoneRadius then
+                if targetSafezoneCoord and targetSafezoneRadius then
+                    if not currentGameTime then
+                        currentGameTime = GetGameTimer()
+                    end
+
+                    local deltaTime = GetTimeDifference(GetGameTimer(), currentGameTime)
+                    currentGameTime = GetGameTimer()
+                    local isArrive = true
+                    if (GetDistanceBetweenCoords(currentSafezoneCoord.x, currentSafezoneCoord.y, 0, targetSafezoneCoord.x, targetSafezoneCoord.y, 0, false) > 0.1) then
+                        currentSafezoneCoord = coord_lerp(currentSafezoneCoord, targetSafezoneCoord, 0.03 * (deltaTime / 5000))
+                        isArrive = isArrive and false
+                    end
+                    if (math.abs(currentSafezoneRadius - targetSafezoneRadius) > 0.1) then
+                        currentSafezoneRadius = math.lerp(currentSafezoneRadius, targetSafezoneRadius, 0.03 * (deltaTime / 5000))
+                        isArrive = isArrive and false
+                    end
+                    if isArrive == true then
+                        RemoveBlip(TargetSafezoneBlip)
+                    end
+                end
+                currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
+                SetBlipPriority(currentSafezoneBlip, 1)
+            end
+        else
+            Citizen.Wait(10000)
+>>>>>>> e74b1eb (fix: Patch zone)
         end
         Wait(20)
     end
