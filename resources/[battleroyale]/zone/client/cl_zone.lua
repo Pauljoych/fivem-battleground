@@ -40,8 +40,9 @@ function zoneNotification()
 end
 
 RegisterNetEvent('vidigg:customZone')
-AddEventHandler('vidigg:customZone', function(pZoneCoords)
+AddEventHandler('vidigg:customZone', function(pZoneCoords, pRandomNum)
     local coolDown = 60 * 1000
+    local randomNumIndex = 1
 
     ESX.ShowNotification("INFO", "Dalam Waktu 1 Menit Zona Akan Muncul ", 5500, 'info')
     Citizen.Wait(coolDown)
@@ -56,65 +57,72 @@ AddEventHandler('vidigg:customZone', function(pZoneCoords)
     zoneNotification()
 
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 1500
     })
     zoneNotification()
 
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 1200
     })
     zoneNotification()
 
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 1200
     })
     zoneNotification()
 
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 1000
     })
     zoneNotification()
 
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 600
     })
     zoneNotification()
 
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 300
     })
     zoneNotification()
 
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 150
     })
     zoneNotification()
 
     TriggerEvent('chatMessage', '^1INFO ', {255, 255, 255}, "Zona Habis")
+    randomNumIndex = randomNumIndex + 1
     TriggerEvent('vidigg:setTargetSafezone', {
-        x = pZoneCoords.x,
-        y = pZoneCoords.y,
+        x = pZoneCoords.x + pRandomNum[randomNumIndex],
+        y = pZoneCoords.y + pRandomNum[randomNumIndex],
         z = 0,
         radius = 0
     })

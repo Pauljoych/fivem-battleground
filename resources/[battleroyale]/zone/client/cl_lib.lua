@@ -1,4 +1,3 @@
--- Returns true if the player is out of the zone, false otherwise
 function isPlayerOutOfZone(safeZoneCoord, safeZoneRadius)
 
     local playerPos = GetEntityCoords(GetPlayerPed(PlayerId()))
@@ -16,16 +15,13 @@ function SetSafeZoneBlip(blip, cSafezoneCoord, cSafezoneRadius, color)
     SetBlipDisplay(safeZoneBlip, 10)
 
     if blip ~= nil then
-        RemoveBlip(blip) -- Remove before blip(variable 'blip')
+        RemoveBlip(blip)
     end
 
     return safeZoneBlip
 end
 
-------------------
-
 math.lerp = function(a, b, t)
-    -- body
     return a + (b - a) * t
 end
 
