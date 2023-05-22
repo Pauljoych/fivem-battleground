@@ -18,7 +18,6 @@ end
 
 function isPlayerOutOfZone()
     local pPos = GetEntityCoords(GetPlayerPed(PlayerId()))
-    local pDistance = math.abs(GetDistanceBetweenCoords(playerPos.x, playerPos.y, 0, currentSafezoneCoord.x, currentSafezoneCoord.y, 0, false))
     local pDistance = math.abs(GetDistanceBetweenCoords(pPos.x, pPos.y, 0, currentSafezoneCoord.x, currentSafezoneCoord.y, 0, false))
 
     return pDistance > currentSafezoneRadius
@@ -46,7 +45,6 @@ AddEventHandler('vidigg:customZone', function(pZoneCoords, pRandomNum)
 
     ESX.ShowNotification('INFO', 'Dalam Waktu 1 Menit Zona Akan Muncul ', 5500, 'info')
     Citizen.Wait(coolDown)
-    zoneState = true
     TriggerEvent('vidigg:setCurrentSafezone', {
         x = pZoneCoords.x,
         y = pZoneCoords.y,
@@ -143,13 +141,13 @@ AddEventHandler('vidigg:setTargetSafezone', function(pNextZone)
 end)
 
 RegisterNetEvent('vidigg:setCurrentSafezone')
-AddEventHandler('vidigg:setCurrentSafezone', function(pSafezone)
+AddEventHandler('vidigg:setCurrentSafezone', function(pSafeZone)
     currentSafezoneCoord = {
-        x = pSafezone.x,
-        y = pSafezone.y,
-        z = pSafezone.z
+        x = pSafeZone.x,
+        y = pSafeZone.y,
+        z = pSafeZone.z
     }
-    currentSafezoneRadius = pSafezone.radius
+    currentSafezoneRadius = pSafeZone.radius
 end)
 
 CreateThread(function()
@@ -163,9 +161,9 @@ CreateThread(function()
                 local newHealth = math.min(currentHealth - zoneDamage)
                 ESX.ShowNotification('INFO', 'Kamu Diluar Zona', 2500, 'info')
                 SetEntityHealth(pPed, newHealth)
-                ChangeWeather(0xC91A3202) -- Clear
+                ChangeWeather('HALLOWEEN')
             else
-                ChangeWeather(0x36A83D84) -- Halloween
+                ChangeWeather('EXTRASUNNY')
             end
         end
     end
@@ -178,15 +176,16 @@ AddEventHandler('casterMode', function(pState)
     if casterMode then ChangeWeather(0x36A83D84) end
 end)
 
-local curentWeather = 0x36A83D84 -- Clear
+local curentWeather = 'EXTRASUNNY' -- Clear
 function ChangeWeather(pWeather)
     if curentWeather == pWeather or casterMode then return end
+    print('Weather change : ' .. pWeather)
 
     ClearOverrideWeather()
     ClearWeatherTypePersist()
-    SetWeatherTypePersist(pWeather)
     SetWeatherTypeNow(pWeather)
     SetWeatherTypeNowPersist(pWeather)
+    SetOverrideWeather(pWeather)
     curentWeather = pWeather
 end
 
@@ -198,53 +197,30 @@ function CreateTargetSafezoneBlip(tSafezoneCoord, tSafezoneRadius)
     SetBlipPriority(TargetSafezoneBlip, 5)
 end
 
-CreateThread(function()
-    local currentGameTime
-
+local currentGameTime
+Citizen.CreateThread(function()
     while true do
-        if targetSafezoneCoord and targetSafezoneRadius then
-            if not currentGameTime then currentGameTime = GetGameTimer() end
+        if currentSafezoneCoord and currentSafezoneRadius then
+            if targetSafezoneCoord and targetSafezoneRadius then
+                if not currentGameTime then currentGameTime = GetGameTimer() end
 
-            local deltaTime = GetTimeDifference(GetGameTimer(), currentGameTime)
-            currentGameTime = GetGameTimer()
-            local isArrive = true
-            if (GetDistanceBetweenCoords(currentSafezoneCoord.x, currentSafezoneCoord.y, 0, targetSafezoneCoord.x, targetSafezoneCoord.y, 0, false) > 0.1) then
-                currentSafezoneCoord = coord_lerp(currentSafezoneCoord, targetSafezoneCoord, 0.03 * (deltaTime / 5000))
-                isArrive = isArrive and false
-            end
-            if (math.abs(currentSafezoneRadius - targetSafezoneRadius) > 0.1) then
-                currentSafezoneRadius = math.lerp(currentSafezoneRadius, targetSafezoneRadius, 0.03 * (deltaTime / 5000))
-                isArrive = isArrive and false
-            end
-            if isArrive == true then RemoveBlip(TargetSafezoneBlip) end
-        end
-        currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
-        SetBlipPriority(currentSafezoneBlip, 1)
-        if zoneState then
-            if currentSafezoneCoord and currentSafezoneRadius then
-                if targetSafezoneCoord and targetSafezoneRadius then
-                    if not currentGameTime then currentGameTime = GetGameTimer() end
-
-                    local deltaTime = GetTimeDifference(GetGameTimer(), currentGameTime)
-                    currentGameTime = GetGameTimer()
-                    local isArrive = true
-                    if (GetDistanceBetweenCoords(currentSafezoneCoord.x, currentSafezoneCoord.y, 0, targetSafezoneCoord.x, targetSafezoneCoord.y, 0, false) > 0.1) then
-                        currentSafezoneCoord = coord_lerp(currentSafezoneCoord, targetSafezoneCoord, 0.03 * (deltaTime / 5000))
-                        isArrive = isArrive and false
-                    end
-                    if (math.abs(currentSafezoneRadius - targetSafezoneRadius) > 0.1) then
-                        currentSafezoneRadius = math.lerp(currentSafezoneRadius, targetSafezoneRadius, 0.03 * (deltaTime / 5000))
-                        isArrive = isArrive and false
-                    end
-                    if isArrive == true then RemoveBlip(TargetSafezoneBlip) end
+                local deltaTime = GetTimeDifference(GetGameTimer(), currentGameTime)
+                currentGameTime = GetGameTimer()
+                local isArrive = true
+                if (GetDistanceBetweenCoords(currentSafezoneCoord.x, currentSafezoneCoord.y, 0, targetSafezoneCoord.x, targetSafezoneCoord.y, 0, false) > 0.1) then
+                    currentSafezoneCoord = coord_lerp(currentSafezoneCoord, targetSafezoneCoord, 0.03 * (deltaTime / 5000))
+                    isArrive = isArrive and false
                 end
-                currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
-                SetBlipPriority(currentSafezoneBlip, 1)
+                if (math.abs(currentSafezoneRadius - targetSafezoneRadius) > 0.1) then
+                    currentSafezoneRadius = math.lerp(currentSafezoneRadius, targetSafezoneRadius, 0.03 * (deltaTime / 5000))
+                    isArrive = isArrive and false
+                end
+                if isArrive == true then RemoveBlip(TargetSafezoneBlip) end
             end
-        else
-            Citizen.Wait(10000)
+            currentSafezoneBlip = SetSafeZoneBlip(currentSafezoneBlip, currentSafezoneCoord, currentSafezoneRadius, 1)
+            SetBlipPriority(currentSafezoneBlip, 1)
         end
-        Wait(20)
+        Citizen.Wait(20)
     end
 end)
 

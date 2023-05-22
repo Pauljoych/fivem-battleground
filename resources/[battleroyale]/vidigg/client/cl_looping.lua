@@ -8,7 +8,7 @@ CreateThread(function()
     SetMapZoomDataLevel(3, 12.3, 0.9, 0.08, 0.0, 0.0)
     SetMapZoomDataLevel(4, 22.3, 0.9, 0.08, 0.0, 0.0)
 
-    Citizen.InvokeNative(ADD_TEXT_ENTRY, 'FE_THDR_GTAO', "Royal BATTLEGROUND | Discord : coming soon ")
+    Citizen.InvokeNative(ADD_TEXT_ENTRY, 'FE_THDR_GTAO', 'Royal BATTLEGROUND | Discord : coming soon ')
 
     while true do
         Wait(5)
@@ -34,9 +34,9 @@ CreateThread(function()
         NetworkOverrideClockTime(12, 0, 0) -- jam 12
         SetPedUsingActionMode(cache.ped, false, -1, 'DEFAULT_ACTION') -- movement player
 
-        SetWeatherTypeNow("EXTRASUNNY")
-        SetWeatherTypeNowPersist("EXTRASUNNY")
-        SetOverrideWeather("EXTRASUNNY")
+        -- SetWeatherTypeNow("EXTRASUNNY")
+        -- SetWeatherTypeNowPersist("EXTRASUNNY")
+        -- SetOverrideWeather("EXTRASUNNY")
 
         -- // WARLOK KENDARAAN \\ -- 
         SetVehicleDensityMultiplierThisFrame(0.0) -- set traffic density to 0 
@@ -50,7 +50,7 @@ CreateThread(function()
         SetCreateRandomCopsNotOnScenarios(false) -- stop random cops (not in a scenario) from spawning.
         SetCreateRandomCopsOnScenarios(false) -- stop random cops (in a scenario) from spawning.
         StartAudioScene('CHARACTER_CHANGE_IN_SKY_SCENE')
-        SetAudioFlag("PoliceScannerDisabled", true);
+        SetAudioFlag('PoliceScannerDisabled', true);
 
         if GetEntityMaxHealth(cache.ped) ~= 200 then -- darah full
             SetEntityMaxHealth(cache.ped, 200)
