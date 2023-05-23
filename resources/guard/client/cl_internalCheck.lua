@@ -1,5 +1,5 @@
 local function n()
-    TriggerServerEventInternal(nil, "?", 1)
+    TriggerServerEventInternal(nil, '?', 1)
 end
 
 local i = function()
@@ -15,16 +15,12 @@ end
 CreateThread(function()
     Wait(2000)
 
-    if i() then
-        TriggerServerEvent("core-guard:internalDetected")
-    end
+    if i() then TriggerServerEvent('core-guard:internalDetected') end
 
     local resourceList = {}
     for i = 0, GetNumResources(), 1 do
         local resource_name = GetResourceByFindIndex(i)
-        if resource_name and GetResourceState(resource_name) == "started" then
-            resourceList[resource_name] = true
-        end
+        if resource_name and GetResourceState(resource_name) == 'started' then resourceList[resource_name] = true end
     end
     for i = 1, 10 do
         Wait(0)
@@ -33,8 +29,10 @@ CreateThread(function()
                 Wait(0)
                 for i = 0, GetNumResources() - 1, 1 do
                     local res = GetResourceByFindIndex(i)
-                    if GetResourceState(res) == "uninitialized" then
-                        TriggerServerEvent("core-guard:internalDetected")
+                    if resourceList[res] == nil then
+                        if GetResourceState(res) == 'uninitialized' then
+                            TriggerServerEvent('core-guard:internalDetected')
+                        end
                     end
                 end
             end
